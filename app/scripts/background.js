@@ -6,8 +6,9 @@ var sourceFileList = {};
 chrome.webRequest.onBeforeRequest.addListener(function (details) {
 
   chrome.tabs.query({ 'active': true, 'windowId': chrome.windows.WINDOW_ID_CURRENT }, function (tabs) {
-    if (details.type === 'script' && /\.js$/.test(details.url) && !/^chrome-extension:\/\//.test(details.url)) {
-      tryGetMap(details.url, function (url, content) {
+    var theUrl = details.url.split('?')[0];
+    if (details.type === 'script' && /\.js$/.test(theUrl) && !/^chrome-extension:\/\//.test(theUrl)) {
+      tryGetMap(theUrl, function (url, content) {
         if (isValidSourceMap(content)) {
           sourceFileList[url] = { content: content, page: tabs[0] };
           setBadgeText(Object.keys(sourceFileList).length);
