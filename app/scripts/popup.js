@@ -16,6 +16,7 @@ port.onMessage.addListener(function (list) {
 
 var contentMap = {};
 var renderGroups = function renderGroups(list) {
+  console.log('renderGroups list', list);
   var group = _.groupBy(list, function (file) {
     return file.page.url;
   });
@@ -82,10 +83,13 @@ var renderGroups = function renderGroups(list) {
 };
 
 var download = function download(e) {
+  console.log('popup download e', e);
   var filename = parseFileName(e.target.href);
+  console.log('pop filename', filename);
   try {
     parseSourceMap(filename, contentMap[e.target.href]);
   } catch (e) {
+    console.log('error!!!!');
     console.log(e);
   }
 };

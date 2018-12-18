@@ -16,6 +16,7 @@ port.onMessage.addListener(function(list) {
 
 let contentMap = {}
 const renderGroups = (list) => {
+  console.log('renderGroups list', list)
   let group = _.groupBy(list, file => file.page.url)
 
   return (
@@ -51,10 +52,13 @@ const renderGroups = (list) => {
 }
 
 const download = (e) => {
+  console.log('popup download e', e)
   let filename = parseFileName(e.target.href)
+  console.log('pop filename', filename)
   try {
     parseSourceMap(filename, contentMap[e.target.href])
   } catch(e) {
+    console.log('error!!!!')
     console.log(e)
   }
 }

@@ -26,6 +26,7 @@ var setBadgeText = function setBadgeText(num) {
 };
 
 var tryGetMap = function tryGetMap(url, callback) {
+  console.log('babel tryGetMap url', url);
   setTimeout(function () {
     fetch(url + '.map').then(function (resp) {
       if (resp.status === 200) {

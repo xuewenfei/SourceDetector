@@ -31,6 +31,7 @@ const setBadgeText = (num) => {
 }
 
 const tryGetMap = (url, callback) => {
+  console.log('babel tryGetMap url', url)
   setTimeout(() => {
     fetch(url + '.map').then(resp => {
       if (resp.status === 200) {
