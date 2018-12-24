@@ -1,5 +1,19 @@
 'use strict';
 
+var skipedKeys = ['git.saybot', 'newrelic.com'];
+function skipKeys(url) {
+  var result = false;
+  for (var i = 0; i < skipedKeys.length; i++) {
+    console.log('now skipedKeys', skipedKeys[i]);
+    if (url.includes(skipedKeys[i])) {
+      result = true;
+    }
+  }
+  console.log('skip url result', url, result);
+  return result;
+}
+chrome.browserAction.setBadgeText({ text: '' });
+
 chrome.browserAction.setBadgeText({ text: '' });
 
 var sourceFileList = {};
@@ -7,7 +21,7 @@ chrome.webRequest.onBeforeRequest.addListener(function (details) {
 
   chrome.tabs.query({ 'active': true, 'windowId': chrome.windows.WINDOW_ID_CURRENT }, function (tabs) {
     var theUrl = details.url.split('?')[0];
-    if (details.type === 'script' && /\.js$/.test(theUrl) && !/^chrome-extension:\/\//.test(theUrl)) {
+    if (!skipKeys(theUrl) && details.type === 'script' && /\.js$/.test(theUrl) && !/^chrome-extension:\/\//.test(theUrl)) {
       tryGetMap(theUrl, function (url, content) {
         if (isValidSourceMap(content)) {
           sourceFileList[url] = { content: content, page: tabs[0] };
