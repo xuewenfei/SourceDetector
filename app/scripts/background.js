@@ -1,6 +1,6 @@
 'use strict';
 
-var skipedKeys = ['git.saybot', 'newrelic.com'];
+var skipedKeys = ['localhost', 'git.saybot', 'newrelic.com'];
 function skipKeys(url) {
   var result = false;
   for (var i = 0; i < skipedKeys.length; i++) {
